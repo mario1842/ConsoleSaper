@@ -5,7 +5,7 @@ class Program
     
     static void Main(string[] args)
     {
-        int width = 16;
+        int width = 8;
         int height = 8;
         int bombs = 10;
 
