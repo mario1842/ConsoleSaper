@@ -50,9 +50,29 @@ class Program
                 Console.WriteLine("ConsoleSaper 16 16 12 or ConsoleSaper with no arguments to play default 8x8");
             }
         }
-        
-        SaperMap map = new SaperMap(width,height,bombs);
-        map.Generate();
-        map.TestShow();
+        bool isRunning = true;
+
+        while (isRunning)
+        {
+            SaperMap map = new SaperMap(width,height,bombs);
+            GameHandler game = new GameHandler("Minesweeper", map.Generate());
+            
+            Console.WriteLine("Game Over! (Click ESC or C to exit!)  (Click SPACEBAR to play again!)");
+            bool isSelecting = true;
+            while (isSelecting)
+            {
+                switch (Console.ReadKey(true).Key)
+                {
+                    case (ConsoleKey.Escape or ConsoleKey.C):
+                        isRunning = false ;
+                        isSelecting = false;
+                        break;
+                    case ConsoleKey.Spacebar:
+                        isSelecting = false;
+                        break;
+                }
+            }
+
+        }
     }
 }
