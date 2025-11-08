@@ -3,6 +3,8 @@ namespace ConsoleSaper;
 public class GameHandler
 {
     private bool _isRunning;
+    private int _allFlagState;
+    private int _flagState;  //correct flag placement
     
     private int[,] _map;
     private int[,] _visMap;
@@ -13,11 +15,13 @@ public class GameHandler
     private int _curWidth;
     private int _curHeight;
     
-    public GameHandler(string title ,int[,] map)
+    public GameHandler(string title, int bombCount ,int[,] map)
     {
         Console.Title = title;
         this._map = map;
-
+        
+        this._flagState = bombCount;
+        this._allFlagState = bombCount;
         this._curHeight = 0;
         this._curWidth = 0;
         
@@ -25,11 +29,9 @@ public class GameHandler
         this._mapWidth = map.GetLength(0);
         
         this._visMap = new int[this._mapWidth,this._mapHeight];
-        
-        Start();
     }
 
-    private void Start()
+    public bool Start()
     {
         DrawMap();
         _isRunning = true;
@@ -37,7 +39,9 @@ public class GameHandler
         { 
             HandleInput();
             DrawMap();
+            CheckIfWin();
         }
+        return CheckIfWin();
     }
 
     private void DrawMap()
@@ -112,7 +116,7 @@ public class GameHandler
         }
     }
 
-    private void SelectField(int x, int y)  
+    private void SelectField(int x, int y)
     {
         if (this._visMap[x,y] == 0)
         {
@@ -138,14 +142,35 @@ public class GameHandler
         switch (this._visMap[this._curWidth, this._curHeight])
         {
             case 2: //jeśli oflagowane
+                if (this._map[this._curWidth, this._curHeight] == 9)
+                {
+                    this._flagState++;
+                }
+                this._allFlagState++;
                 this._visMap[this._curWidth, this._curHeight] = 0;
                 break;
             case 0: //jeśli wolne
+                if (this._map[this._curWidth, this._curHeight] == 9)
+                {
+                    this._flagState--;
+                    
+                }
+                this._allFlagState--;
                 this._visMap[this._curWidth, this._curHeight] = 2;
                 break;
         }
     }
 
+    private bool CheckIfWin()
+    {
+        if (this._flagState == 0 && this._allFlagState == 0)
+        {
+            this._isRunning = false;
+            return true;
+        }
+
+        return false;
+    }
 
     private ConsoleColor GetBorderColor(int x, int y)
     {

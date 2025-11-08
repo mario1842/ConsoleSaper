@@ -55,9 +55,17 @@ class Program
         while (isRunning)
         {
             SaperMap map = new SaperMap(width,height,bombs);
-            GameHandler game = new GameHandler("Minesweeper", map.Generate());
-            
-            Console.WriteLine("Game Over! (Click ESC or C to exit!)  (Click SPACEBAR to play again!)");
+            GameHandler game = new GameHandler("Minesweeper", bombs, map.Generate());
+            bool isWin = game.Start();
+            if (isWin)
+            {
+                Console.WriteLine("You Win!");
+            }
+            else
+            {
+                Console.WriteLine("Game Over!");
+            }
+            Console.WriteLine("(Click ESC or C to exit!) (Click SPACEBAR to play again!)");
             bool isSelecting = true;
             while (isSelecting)
             {
