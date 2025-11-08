@@ -51,8 +51,17 @@ public class GameHandler
         {
             for (int i = 0; i < this._mapWidth; i++)
             {
-                Console.ForegroundColor = GetBorderColor(i,j);
-                Console.Write('[');
+                if (this._curWidth == i && this._curHeight == j)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write('[');
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.Write(' ');
+                }
+
                 Console.ResetColor();
 
                 switch (this._visMap[i, j])
@@ -78,10 +87,17 @@ public class GameHandler
                         Console.Write(' ');
                         break;
                 }
-                Console.ForegroundColor = GetBorderColor(i,j);
-                Console.Write(']');
-                Console.ResetColor();
-                
+                if (this._curWidth == i && this._curHeight == j)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(']');
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.Write(' ');
+                }
+
             }
             Console.WriteLine();
         }
@@ -168,19 +184,8 @@ public class GameHandler
             this._isRunning = false;
             return true;
         }
-
         return false;
     }
-
-    private ConsoleColor GetBorderColor(int x, int y)
-    {
-        if (this._curWidth == x && this._curHeight == y)
-        {
-            return ConsoleColor.Yellow;
-        }
-        return ConsoleColor.White;
-    }
-
     private ConsoleColor GetNumberColor(int number)
     {
         switch (number)
