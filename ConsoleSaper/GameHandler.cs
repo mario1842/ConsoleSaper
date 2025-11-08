@@ -57,6 +57,10 @@ public class GameHandler
                     Console.Write('[');
                     Console.ResetColor();
                 }
+                else if(this._visMap[i, j] == 0)
+                {
+                    Console.Write('[');
+                }
                 else
                 {
                     Console.Write(' ');
@@ -93,7 +97,10 @@ public class GameHandler
                     Console.Write(']');
                     Console.ResetColor();
                 }
-                else
+                else if(this._visMap[i, j] == 0)
+                {
+                    Console.Write(']');
+                }else
                 {
                     Console.Write(' ');
                 }
