@@ -49,49 +49,15 @@ public class SaperMap
             {
                 if (!CheckIfBomb(i,j))
                 {
-                    int number = 0;
-                    if (j != 0)
-                    {
-                        // ma góry
-                        if (i != 0)
-                        {
-                            number += CheckIfBomb(i-1, j-1) ? 1 : 0;
 
-                            // ma lewej góry
-                        }
-                        if (i != this.x-1)
-                        {
-                            number += CheckIfBomb(i+1, j-1) ? 1 : 0;
-                            //  ma prawej góry
-                        }
-                        number += CheckIfBomb(i, j-1) ? 1 : 0;
-                   
-                    }
-                    if (j != this.y-1)
+                    for (int yNumber = Math.Max(0, j - 1); yNumber <= Math.Min(j + 1, this.y - 1); yNumber++)
                     {
-                        //  ma doł
-                        if (i != 0)
+                        for (int xNumber = Math.Max(0, i - 1); xNumber <= Math.Min(i + 1, this.x - 1); xNumber++)
                         {
-                            number += CheckIfBomb(i-1, j+1) ? 1 : 0;
-                            // ma lewej dół
+                            this.map[i, j] += CheckIfBomb(xNumber, yNumber) ?  1 : 0;
                         }
-                        if (i != this.x-1)
-                        {
-                            number += CheckIfBomb(i+1, j+1) ? 1 : 0;
-                            //  ma prawej doł
-                        }
-                        number += CheckIfBomb(i, j+1) ? 1 : 0;
+                    }
                     
-                    }
-                    if (i != 0)
-                    {
-                        number += CheckIfBomb(i-1, j) ? 1 : 0;
-                    }
-                    if (i != this.x-1)
-                    {
-                        number += CheckIfBomb(i+1, j) ? 1 : 0;
-                    }
-                    map[i, j] = number;
                 }
                 
             }
