@@ -6,14 +6,14 @@ public class GameHandler
     private int _allFlagState;
     private int _flagState;  //correct flag placement
     
-    private int[,] _map;
-    private int[,] _visMap;
+    public int[,] _map;
+    public int[,] _visMap;
     
-    private int _mapWidth;
-    private int _mapHeight;
+    public int _mapWidth;
+    public int _mapHeight;
     
-    private int _curWidth;
-    private int _curHeight;
+    public int _curWidth;
+    public int _curHeight;
     
     public GameHandler(string title, int bombCount ,int[,] map)
     {
@@ -33,82 +33,17 @@ public class GameHandler
 
     public bool Start()
     {
-        DrawMap();
+        ConsoleRenderer.DrawGame(this);
         _isRunning = true;
         while (_isRunning)
         { 
             HandleInput();
-            DrawMap();
+            ConsoleRenderer.DrawGame(this);
             CheckIfWin();
         }
         return CheckIfWin();
     }
-
-    private void DrawMap()
-    {
-        Console.Clear();
-        for (int j = 0; j < this._mapHeight; j++)
-        {
-            for (int i = 0; i < this._mapWidth; i++)
-            {
-                if (this._curWidth == i && this._curHeight == j)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write('[');
-                    Console.ResetColor();
-                }
-                else if(this._visMap[i, j] == 0)
-                {
-                    Console.Write('[');
-                }
-                else
-                {
-                    Console.Write(' ');
-                }
-
-                Console.ResetColor();
-
-                switch (this._visMap[i, j])
-                {
-                    case 2:
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
-                        Console.Write("F");
-                        Console.ResetColor();
-                        break;
-                    case 1:
-                        if (this._map[i, j] == 9)
-                        {
-                            Console.Write("💣");
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = GetNumberColor(this._map[i,j]);
-                            Console.Write(this._map[i,j]);
-                            Console.ResetColor();
-                        }
-                        break;
-                    case 0:
-                        Console.Write(' ');
-                        break;
-                }
-                if (this._curWidth == i && this._curHeight == j)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write(']');
-                    Console.ResetColor();
-                }
-                else if(this._visMap[i, j] == 0)
-                {
-                    Console.Write(']');
-                }else
-                {
-                    Console.Write(' ');
-                }
-
-            }
-            Console.WriteLine();
-        }
-    }
+    
 
     private void HandleInput()
     {
@@ -193,42 +128,6 @@ public class GameHandler
         }
         return false;
     }
-    private ConsoleColor GetNumberColor(int number)
-    {
-        switch (number)
-        {
-            case 1:
-                return  ConsoleColor.Blue;
-                break;
-            case 2:
-                return  ConsoleColor.Green;
-                break;
-            case 3:
-                return  ConsoleColor.Red;
-                break;
-            case 4:
-                return  ConsoleColor.DarkBlue;
-                break;
-            case 5:
-                return  ConsoleColor.DarkRed;
-                break;
-            case 6:
-                return  ConsoleColor.DarkCyan;
-                break;
-            case 7:
-                return  ConsoleColor.White;
-                break;
-            case 8:
-                return ConsoleColor.DarkGray;
-                break;
-            case 9:
-                return ConsoleColor.Black;
-                break;
-            default:
-                return ConsoleColor.White;
-                break;
-        }
-    }
-
+    
 
 }

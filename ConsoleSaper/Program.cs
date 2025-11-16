@@ -57,6 +57,7 @@ class Program
             SaperMap map = new SaperMap(width,height,bombs);
             GameHandler game = new GameHandler("Minesweeper", bombs, map.Generate());
             bool isWin = game.Start();
+            
             if (isWin)
             {
                 Console.WriteLine("You Win!");
